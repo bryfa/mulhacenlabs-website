@@ -1,0 +1,49 @@
+@page "/item/{category}/{slug}"
+@model ItemModel
+@{
+    ViewData["Title"] = Model.Card?.Title;
+}
+
+@if (Model.Card != null)
+{
+    <div class="container mx-auto px-8 py-12 max-w-4xl">
+        <!-- Back button -->
+        <a href="/" class="text-blue-600 hover:text-blue-800 text-sm font-medium mb-8 inline-block">← Back to all</a>
+
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex items-center gap-4 mb-4">
+                <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full">@Model.Card.Category</span>
+                @if (Model.Card.Featured)
+                {
+                    <span class="bg-yellow-100 text-yellow-800 text-sm px-3 py-1 rounded-full">Featured</span>
+                }
+            </div>
+            <h1 class="text-5xl font-bold text-gray-900 mb-4">@Model.Card.Title</h1>
+            <p class="text-gray-500 text-xl">@Model.Card.Description</p>
+        </div>
+
+        <!-- Image placeholder -->
+        <div class="bg-gray-200 h-64 w-full rounded-xl flex items-center justify-center mb-8">
+            <span class="text-gray-400">No image</span>
+        </div>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 mb-8">
+            @foreach (var tag in Model.Card.Tags)
+            {
+                <span class="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full">@tag</span>
+            }
+        </div>
+
+        <!-- Content -->
+        <div class="prose max-w-none">
+            @Html.Raw(Model.Card.Content)
+        </div>
+
+        <!-- Date -->
+        <div class="mt-8 pt-8 border-t border-gray-200">
+            <span class="text-gray-400 text-sm">Published @Model.Card.Date.ToString("MMMM dd, yyyy")</span>
+        </div>
+    </div>
+}
