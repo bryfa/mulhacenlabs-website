@@ -2,6 +2,18 @@
 @model ItemModel
 @{
     ViewData["Title"] = Model.Card?.Title;
+    
+    var categoryColors = new Dictionary<string, string>
+    {
+        { "plugins", "bg-red-500" },
+        { "albums", "bg-blue-500" },
+        { "sample-packs", "bg-yellow-400" },
+        { "events", "bg-green-500" },
+        { "blogs", "bg-purple-500" }
+    };
+    var bgColor = Model.Card != null && categoryColors.ContainsKey(Model.Card.Category) 
+        ? categoryColors[Model.Card.Category] 
+        : "bg-gray-400";
 }
 
 @if (Model.Card != null)
@@ -23,10 +35,17 @@
             <p class="text-gray-500 text-xl">@Model.Card.Description</p>
         </div>
 
-        <!-- Image placeholder -->
-        <div class="bg-gray-200 h-64 w-full rounded-xl flex items-center justify-center mb-8">
-            <span class="text-gray-400">No image</span>
-        </div>
+        <!-- Image -->
+        @if (!string.IsNullOrEmpty(Model.Card.Image) && Model.Card.Image != "/images/placeholder.jpg")
+        {
+            <img src="@Model.Card.Image" alt="@Model.Card.Title" class="w-full h-96 object-cover rounded-xl mb-8" />
+        }
+        else
+        {
+            <div class="@bgColor w-full h-96 rounded-xl flex items-center justify-center mb-8">
+                <span class="text-white text-6xl font-black opacity-20">@Model.Card.Category.ToUpper()</span>
+            </div>
+        }
 
         <!-- Tags -->
         <div class="flex flex-wrap gap-2 mb-8">
