@@ -10,22 +10,45 @@
 
     <!-- Navigation -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-8 py-4 flex items-center justify-between">
-            <!-- Logo -->
-            <a asp-page="/Index" class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
-                Mulhacen Labs
-            </a>
+        <nav class="container mx-auto px-8 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a asp-page="/Index" class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+                    Mulhacen Labs
+                </a>
 
-            <!-- Nav Links -->
-            <ul class="flex items-center gap-8">
-                <li><a asp-page="/Index" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Home</a></li>
-                <li><a href="/#plugins" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Plugins</a></li>
-                <li><a href="/#albums" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Albums</a></li>
-                <li><a href="/#sample-packs" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Sample Packs</a></li>
-                <li><a href="/#events" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Events</a></li>
-                <li><a href="/#blogs" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Blog</a></li>
-                <li><a asp-page="/Contact" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Contact</a></li>
-            </ul>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+
+                <!-- Desktop Nav Links -->
+                <ul class="hidden md:flex items-center gap-8">
+                    <li><a asp-page="/Index" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Home</a></li>
+                    <li><a href="/#plugins" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Plugins</a></li>
+                    <li><a href="/#albums" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Albums</a></li>
+                    <li><a href="/#sample-packs" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Sample Packs</a></li>
+                    <li><a href="/#events" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Events</a></li>
+                    <li><a href="/#blogs" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Blog</a></li>
+                    <li><a asp-page="/Contact" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <ul class="flex flex-col gap-4">
+                    <li><a asp-page="/Index" class="block text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Home</a></li>
+                    <li><a href="/#plugins" class="block text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Plugins</a></li>
+                    <li><a href="/#albums" class="block text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Albums</a></li>
+                    <li><a href="/#sample-packs" class="block text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Sample Packs</a></li>
+                    <li><a href="/#events" class="block text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Events</a></li>
+                    <li><a href="/#blogs" class="block text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Blog</a></li>
+                    <li><a asp-page="/Contact" class="block text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Contact</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
