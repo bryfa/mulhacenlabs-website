@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("mulhacenlabs-website")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+68ebcae24d0cd92016f4032a8cfdfa269cc9e980")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81156c92e7df787336457b175baec35694a27e6b")]
 [assembly: System.Reflection.AssemblyProductAttribute("mulhacenlabs-website")]
 [assembly: System.Reflection.AssemblyTitleAttribute("mulhacenlabs-website")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

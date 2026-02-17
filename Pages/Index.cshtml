@@ -4,15 +4,54 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="container mx-auto p-8">
-    <h1 class="text-4xl font-bold mb-8">Plugins</h1>
-    <div class="grid grid-cols-3 gap-6">
-        @foreach (var card in Model.Plugins)
-        {
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-bold">@card.Title</h2>
-                <p class="text-gray-600 mt-2">@card.Description</p>
-            </div>
-        }
+<div class="container mx-auto px-8 py-12">
+
+    <!-- Plugins Section -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Plugins</h2>
+        <p class="text-gray-500 mb-8">Professional audio plugins for music production</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var card in Model.Plugins)
+            {
+                @await Html.PartialAsync("_Card", card)
+            }
+        </div>
     </div>
+
+    <!-- Albums Section -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Albums</h2>
+        <p class="text-gray-500 mb-8">Music releases and albums</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var card in Model.Albums)
+            {
+                @await Html.PartialAsync("_Card", card)
+            }
+        </div>
+    </div>
+
+    <!-- Sample Packs Section -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Sample Packs</h2>
+        <p class="text-gray-500 mb-8">High quality samples for your productions</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var card in Model.SamplePacks)
+            {
+                @await Html.PartialAsync("_Card", card)
+            }
+        </div>
+    </div>
+
+    <!-- Events Section -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Events</h2>
+        <p class="text-gray-500 mb-8">Live shows and appearances</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var card in Model.Events)
+            {
+                @await Html.PartialAsync("_Card", card)
+            }
+        </div>
+    </div>
+
 </div>

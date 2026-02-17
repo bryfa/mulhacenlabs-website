@@ -1,0 +1,31 @@
+@model MulhacenLabs.Website.Models.CardItem
+
+<div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+    <!-- Card Image -->
+    <div class="bg-gray-200 h-48 w-full flex items-center justify-center">
+        <span class="text-gray-400 text-sm">No image</span>
+    </div>
+    <!-- Card Content -->
+    <div class="p-6">
+        <div class="flex items-center justify-between mb-2">
+            <h2 class="text-xl font-bold text-gray-900">@Model.Title</h2>
+            @if (Model.Featured)
+            {
+                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Featured</span>
+            }
+        </div>
+        <p class="text-gray-500 mt-2 text-sm">@Model.Description</p>
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 mt-4">
+            @foreach (var tag in Model.Tags)
+            {
+                <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">@tag</span>
+            }
+        </div>
+        <!-- Footer -->
+        <div class="flex items-center justify-between mt-6">
+            <span class="text-gray-400 text-xs">@Model.Date.ToString("MMM dd, yyyy")</span>
+            <a href="/item/@Model.Category/@Model.Slug" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Learn more →</a>
+        </div>
+    </div>
+</div>
