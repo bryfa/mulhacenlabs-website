@@ -1,0 +1,25 @@
+{
+  "name": "mulhacenlabs-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/css/site.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bryfa/mulhacenlabs-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bryfa/mulhacenlabs-website/issues"
+  },
+  "homepage": "https://github.com/bryfa/mulhacenlabs-website#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
