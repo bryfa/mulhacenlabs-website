@@ -12,6 +12,7 @@ public class IndexModel : PageModel
         public List<CardItem> Albums { get; set; } = new();
         public List<CardItem> SamplePacks { get; set; } = new();
         public List<CardItem> Events { get; set; } = new();
+        public List<CardItem> Blogs { get; set; } = new();
 
         public IndexModel(ContentService contentService)
         {
@@ -24,5 +25,6 @@ public class IndexModel : PageModel
             Albums = _contentService.GetCards("albums");
             SamplePacks = _contentService.GetCards("sample-packs");
             Events = _contentService.GetCards("events");
+            Blogs = _contentService.GetCards("blogs");
         }
     }

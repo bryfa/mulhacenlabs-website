@@ -22,7 +22,7 @@
 
         <!-- Subheadline -->
         <p class="text-xl text-gray-400 mb-10 max-w-2xl">
-            Audio plugins. Music. Software tools. Freelance work. 
+            Audio plugins. Music. Sound design. Software development. Freelance work. AI research. <br />
             <span class="text-white font-medium">All under one roof.</span>
         </p>
 
@@ -32,7 +32,7 @@
                 Hire Me
             </a>
             <a href="/#blogs" class="border border-white text-white font-bold px-8 py-3 rounded-full hover:bg-white hover:text-black transition-colors">
-                Explore Blogs
+                Read Blog
             </a>
         </div>
     </div>
@@ -88,4 +88,17 @@
         </div>
     </div>
 
+<!-- Blogs Section -->
+    <div id="blogs" class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Blog</h2>
+        <p class="text-gray-500 mb-8">Tutorials, insights and updates from the lab</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var card in Model.Blogs)
+            {
+                @await Html.PartialAsync("_Card", card)
+            }
+        </div>
+    </div>
+
+</div>
 </div>
