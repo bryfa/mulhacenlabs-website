@@ -3,50 +3,44 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MulhacenLabs.Website</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - Mulhacen Labs</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MulhacenLabs.Website.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MulhacenLabs.Website</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-8 py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <a asp-page="/Index" class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+                Mulhacen Labs
+            </a>
+
+            <!-- Nav Links -->
+            <ul class="flex items-center gap-8">
+                <li><a asp-page="/Index" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Home</a></li>
+                <li><a href="/#plugins" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Plugins</a></li>
+                <li><a href="/#albums" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Albums</a></li>
+                <li><a href="/#sample-packs" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Sample Packs</a></li>
+                <li><a href="/#events" class="text-gray-600 hover:text-blue-600 transition-colors text-sm font-medium">Events</a></li>
+            </ul>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - MulhacenLabs.Website - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <!-- Main Content -->
+    <main class="flex-grow">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="container mx-auto px-8 py-8 flex items-center justify-between">
+            <p class="text-gray-400 text-sm">&copy; 2026 Mulhacen Labs. All rights reserved.</p>
+            <a asp-page="/Privacy" class="text-gray-400 hover:text-gray-600 text-sm">Privacy</a>
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
