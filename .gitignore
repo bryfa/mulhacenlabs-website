@@ -52,4 +52,4 @@ npm-debug.log
 # Tailwind output is tracked
 # but you might want to ignore it in some setups
 # wwwroot/css/site.css
-EOF
+EOFnode_modules/
