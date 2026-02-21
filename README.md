@@ -27,33 +27,39 @@ Built with ASP.NET Core 10 Razor Pages, a file-based headless CMS using Markdown
 
 ```
 mulhacenlabs-website/
-├── Content/                  # CMS content — Markdown files with YAML frontmatter
-│   ├── albums/
-│   ├── blogs/
-│   ├── events/
-│   ├── plugins/
-│   └── sample-packs/
-├── Models/
-│   └── CardItem.cs           # Data model for all content items
-├── Pages/
-│   ├── Shared/
-│   │   ├── _Layout.cshtml    # Site-wide layout (nav, footer)
-│   │   └── _Card.cshtml      # Reusable card partial component
-│   ├── Index.cshtml(.cs)     # Homepage — all content sections
-│   ├── Item.cshtml(.cs)      # Detail page — individual content item
-│   ├── Contact.cshtml(.cs)   # Contact form
-│   └── Privacy.cshtml(.cs)   # Privacy policy
-├── Services/
-│   └── ContentService.cs     # CMS logic — reads, parses, and serves content
-├── Styles/
-│   └── tailwind.css          # Tailwind source (compiled to wwwroot/css/site.css)
-├── wwwroot/                  # Static assets served publicly
-│   ├── css/site.css          # Compiled Tailwind output
-│   └── js/site.js            # Mobile hamburger menu
-├── Program.cs                # App entry point and DI configuration
-├── tailwind.config.js        # Tailwind content paths
-├── package.json              # npm scripts for CSS build
-└── mulhacenlabs-website.csproj
+├── src/
+│   └── MulhacenLabs.Website/           # ASP.NET Core web project
+│       ├── Content/                     # CMS content — Markdown files with YAML frontmatter
+│       │   ├── blogs/
+│       │   ├── events/
+│       │   ├── plugins/
+│       │   └── sample-packs/
+│       ├── Models/
+│       │   └── CardItem.cs             # Data model for all content items
+│       ├── Pages/
+│       │   ├── Shared/
+│       │   │   ├── _Layout.cshtml      # Site-wide layout (nav, footer)
+│       │   │   └── _Card.cshtml        # Reusable card partial component
+│       │   ├── Index.cshtml(.cs)       # Homepage — all content sections
+│       │   ├── Item.cshtml(.cs)        # Detail page — individual content item
+│       │   ├── Contact.cshtml(.cs)     # Contact form
+│       │   └── Privacy.cshtml(.cs)     # Privacy policy
+│       ├── Services/
+│       │   └── ContentService.cs       # CMS logic — reads, parses, and serves content
+│       ├── Styles/
+│       │   └── tailwind.css            # Tailwind source (compiled to wwwroot/css/site.css)
+│       ├── wwwroot/                    # Static assets served publicly
+│       │   ├── css/site.css            # Compiled Tailwind output
+│       │   └── js/site.js              # Mobile hamburger menu
+│       ├── Program.cs                  # App entry point and DI configuration
+│       └── mulhacenlabs-website.csproj
+├── tests/
+│   └── MulhacenLabs.Website.Tests/     # xUnit test project
+│       └── MulhacenLabs.Website.Tests.csproj
+├── mulhacenlabs-website.sln            # Solution file (references both projects)
+├── tailwind.config.js                  # Tailwind content paths
+├── package.json                        # npm scripts for CSS build
+└── README.md
 ```
 
 ---
@@ -80,7 +86,7 @@ Run the CSS watcher and the .NET dev server in two terminals:
 npm run dev:css
 
 # Terminal 2 — start the ASP.NET Core dev server
-dotnet run
+dotnet run --project src/MulhacenLabs.Website
 ```
 
 The site will be available at:
@@ -94,14 +100,14 @@ The site will be available at:
 npm run build:css:prod
 
 # Publish the .NET app
-dotnet publish -c Release -o ./publish
+dotnet publish src/MulhacenLabs.Website -c Release -o ./publish
 ```
 
 ---
 
 ## CMS: Content Authoring
 
-All content lives in `/Content/{category}/` as `.md` files. Each file has a YAML frontmatter block followed by full Markdown body content.
+All content lives in `src/MulhacenLabs.Website/Content/{category}/` as `.md` files. Each file has a YAML frontmatter block followed by full Markdown body content.
 
 ### Content schema
 
@@ -122,11 +128,11 @@ Full **Markdown** content rendered on the detail page.
 
 | Category | Directory | URL prefix |
 |---|---|---|
-| Plugins | `Content/plugins/` | `/item/plugins/{slug}` |
-| Albums | `Content/albums/` | `/item/albums/{slug}` |
-| Sample Packs | `Content/sample-packs/` | `/item/sample-packs/{slug}` |
-| Events | `Content/events/` | `/item/events/{slug}` |
-| Blog | `Content/blogs/` | `/item/blogs/{slug}` |
+| Plugins | `src/MulhacenLabs.Website/Content/plugins/` | `/item/plugins/{slug}` |
+| Albums | `src/MulhacenLabs.Website/Content/albums/` | `/item/albums/{slug}` |
+| Sample Packs | `src/MulhacenLabs.Website/Content/sample-packs/` | `/item/sample-packs/{slug}` |
+| Events | `src/MulhacenLabs.Website/Content/events/` | `/item/events/{slug}` |
+| Blog | `src/MulhacenLabs.Website/Content/blogs/` | `/item/blogs/{slug}` |
 
 The `slug` is derived automatically from the filename (e.g. `getting-started-with-juce.md` → `getting-started-with-juce`).
 
@@ -138,9 +144,9 @@ The `slug` is derived automatically from the filename (e.g. `getting-started-wit
 4. No restart required — `ContentService` reads files at request time.
 
 To add a new category:
-1. Create a new directory under `Content/`.
-2. Add a section to `Pages/Index.cshtml` following the existing pattern.
-3. Add a colour mapping entry in `Pages/Shared/_Card.cshtml`.
+1. Create a new directory under `src/MulhacenLabs.Website/Content/`.
+2. Add a section to `src/MulhacenLabs.Website/Pages/Index.cshtml` following the existing pattern.
+3. Add a colour mapping entry in `src/MulhacenLabs.Website/Pages/Shared/_Card.cshtml`.
 
 ---
 
@@ -173,7 +179,8 @@ Cards are rendered in a responsive CSS grid: 1 column (mobile) → 2 columns (ta
 - `ContentService` is registered as a **singleton**. Content is read from disk on each request — no restart needed to see new content.
 - Tailwind CSS is compiled separately via npm. Run `npm run dev:css` in parallel with `dotnet run`.
 - The `.gitignore` excludes `bin/`, `obj/`, `node_modules/`, `.vs/`, `.idea/`, and `.DS_Store`.
-- The generated `wwwroot/css/site.css` is committed to git so deploys do not require a Node.js build step on the server.
+- The generated `src/MulhacenLabs.Website/wwwroot/css/site.css` is committed to git so deploys do not require a Node.js build step on the server.
+- Run tests with `dotnet test` from the repo root.
 
 ---
 
@@ -184,7 +191,7 @@ Cards are rendered in a responsive CSS grid: 1 column (mobile) → 2 columns (ta
 - [ ] Pagination for content sections
 - [ ] Search / filter by tag
 - [ ] SEO meta tags (Open Graph, structured data)
-- [ ] Unit and integration tests (see `CLAUDE.md` for test strategy)
+- [ ] Expand test coverage (ContentService tests added, see `tests/`)
 - [ ] CI/CD pipeline (GitHub Actions)
 - [ ] Production deployment configuration
 
