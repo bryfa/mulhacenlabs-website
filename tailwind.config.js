@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./Pages/**/*.cshtml"
+    "./src/MulhacenLabs.Website/Pages/**/*.cshtml"
   ],
   theme: {
     extend: {},
