@@ -21,10 +21,10 @@ public class IndexModel : PageModel
 
         public void OnGet()
         {
-            Plugins = _contentService.GetCards("plugins");
-            Releases = _contentService.GetCards("releases");
-            SamplePacks = _contentService.GetCards("sample-packs");
-            Events = _contentService.GetCards("events");
-            Blogs = _contentService.GetCards("blogs");
+            Plugins = _contentService.GetCards("plugins").Take(3).ToList();
+            Releases = _contentService.GetCards("releases").Take(3).ToList();
+            SamplePacks = _contentService.GetCards("sample-packs").Take(3).ToList();
+            Events = _contentService.GetCards("events").Take(3).ToList();
+            Blogs = _contentService.GetCards("blogs").Take(3).ToList();
         }
     }

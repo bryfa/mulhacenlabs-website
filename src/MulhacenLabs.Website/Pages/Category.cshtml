@@ -1,0 +1,65 @@
+@page "/{category}"
+@model CategoryModel
+@{
+    ViewData["Title"] = Model.DisplayName;
+}
+
+<div class="container mx-auto px-8 py-12">
+    <!-- Category Header -->
+    <div class="mb-10">
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">@Model.DisplayName</h1>
+        <p class="text-gray-500 text-lg">@Model.Description</p>
+    </div>
+
+    <!-- Card Grid -->
+    @if (Model.Result.Items.Any())
+    {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            @foreach (var card in Model.Result.Items)
+            {
+                @await Html.PartialAsync("_Card", card)
+            }
+        </div>
+
+        <!-- Pagination -->
+        @if (Model.Result.TotalPages > 1)
+        {
+            <nav class="flex items-center justify-center gap-2">
+                @if (Model.Result.HasPreviousPage)
+                {
+                    <a href="/@Model.CategorySlug?page=@(Model.Result.CurrentPage - 1)"
+                       class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        &larr; Previous
+                    </a>
+                }
+
+                @for (int i = 1; i <= Model.Result.TotalPages; i++)
+                {
+                    if (i == Model.Result.CurrentPage)
+                    {
+                        <span class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg">@i</span>
+                    }
+                    else
+                    {
+                        <a href="/@Model.CategorySlug?page=@i"
+                           class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                            @i
+                        </a>
+                    }
+                }
+
+                @if (Model.Result.HasNextPage)
+                {
+                    <a href="/@Model.CategorySlug?page=@(Model.Result.CurrentPage + 1)"
+                       class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        Next &rarr;
+                    </a>
+                }
+            </nav>
+        }
+    }
+    else
+    {
+        <p class="text-gray-400 text-center py-16">No items in this category yet.</p>
+    }
+</div>

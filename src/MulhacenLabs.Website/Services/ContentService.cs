@@ -11,6 +11,11 @@ namespace MulhacenLabs.Website.Services
         private readonly MarkdownPipeline _pipeline;
         private readonly IDeserializer _deserializer;
 
+        public static readonly HashSet<string> ValidCategories = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "plugins", "releases", "sample-packs", "events", "blogs"
+        };
+
         public ContentService(IWebHostEnvironment env)
         {
             _contentPath = Path.Combine(env.ContentRootPath, "Content");
@@ -37,6 +42,30 @@ namespace MulhacenLabs.Website.Services
             }
 
             return cards.OrderByDescending(c => c.Date).ToList();
+        }
+
+        public PagedResult<CardItem> GetCardsPaged(string category, int page, int pageSize)
+        {
+            var allCards = GetCards(category);
+            var totalItems = allCards.Count;
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            if (totalPages < 1) totalPages = 1;
+            if (page < 1) page = 1;
+            if (page > totalPages) page = totalPages;
+
+            var items = allCards
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new PagedResult<CardItem>
+            {
+                Items = items,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                TotalItems = totalItems,
+                PageSize = pageSize
+            };
         }
 
         private CardItem? ParseMarkdownFile(string filePath, string category)
