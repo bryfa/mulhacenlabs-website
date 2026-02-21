@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:css": "tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/css/site.css --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:css": "tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/css/site.css --watch",
+    "build:css": "tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/css/site.css",
+    "build:css:prod": "tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/css/site.css --minify",
+    "test": "echo \"No JS tests configured yet\" && exit 0"
   },
   "repository": {
     "type": "git",

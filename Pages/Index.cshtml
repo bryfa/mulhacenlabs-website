@@ -17,12 +17,12 @@
 
         <!-- Headline -->
         <h1 class="text-6xl font-black tracking-tight mb-6">
-            Mulhacen Labs
+            Mulhacén Labs
         </h1>
 
         <!-- Subheadline -->
         <p class="text-xl text-gray-400 mb-10 max-w-2xl">
-            Audio plugins. Music. Sound design. Software development. Freelance work. AI research. <br />
+            Audio plugins. Music. Sound design. Software development. Freelance work. AI services. <br />
             <span class="text-white font-medium">All under one roof.</span>
         </p>
 
@@ -52,12 +52,12 @@
         </div>
     </div>
 
-    <!-- Albums Section -->
-    <div id="albums" class="mb-16">
-        <h2 class="text-3xl font-bold text-gray-900 mb-2">Albums</h2>
-        <p class="text-gray-500 mb-8">Music releases and albums</p>
+    <!-- Releases Section -->
+    <div id="releases" class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Releases</h2>
+        <p class="text-gray-500 mb-8">Music releases like albums, singles, and EPs</p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach (var card in Model.Albums)
+            @foreach (var card in Model.Releases)
             {
                 @await Html.PartialAsync("_Card", card)
             }
