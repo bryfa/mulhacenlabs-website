@@ -11,11 +11,6 @@ namespace MulhacenLabs.Website.Services
         private readonly MarkdownPipeline _pipeline;
         private readonly IDeserializer _deserializer;
 
-        public static readonly HashSet<string> ValidCategories = new(StringComparer.OrdinalIgnoreCase)
-        {
-            "plugins", "releases", "sample-packs", "events", "blogs"
-        };
-
         public ContentService(IWebHostEnvironment env)
         {
             _contentPath = Path.Combine(env.ContentRootPath, "Content");
@@ -77,9 +72,18 @@ namespace MulhacenLabs.Website.Services
                 return null;
 
             var frontMatter = parts[0].Trim();
-            var markdownContent = parts.Length > 1 ? parts[1].Trim() : string.Empty;
+            var markdownContent = parts[1].Trim();
 
-            var card = _deserializer.Deserialize<CardItem>(frontMatter);
+            CardItem card;
+            try
+            {
+                card = _deserializer.Deserialize<CardItem>(frontMatter);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
             card.Content = Markdown.ToHtml(markdownContent, _pipeline);
             card.Slug = Path.GetFileNameWithoutExtension(filePath);
             card.Category = category;

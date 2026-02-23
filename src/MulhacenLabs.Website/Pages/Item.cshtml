@@ -3,24 +3,19 @@
 @{
     ViewData["Title"] = Model.Card?.Title;
     
-    var categoryColors = new Dictionary<string, string>
+    MulhacenLabs.Website.Models.CategoryInfo? catInfo = null;
+    if (Model.Card != null)
     {
-        { "plugins", "bg-red-500" },
-        { "releases", "bg-blue-500" },
-        { "sample-packs", "bg-yellow-400" },
-        { "events", "bg-green-500" },
-        { "blogs", "bg-purple-500" }
-    };
-    var bgColor = Model.Card != null && categoryColors.ContainsKey(Model.Card.Category) 
-        ? categoryColors[Model.Card.Category] 
-        : "bg-gray-400";
+        MulhacenLabs.Website.Models.CategoryRegistry.BySlug.TryGetValue(Model.Card.Category, out catInfo);
+    }
+    var bgColor = catInfo?.Color ?? "bg-gray-400";
 }
 
 @if (Model.Card != null)
 {
     <div class="container mx-auto px-8 py-12 max-w-4xl">
         <!-- Back button -->
-        <a href="/@Model.Card.Category" class="text-blue-600 hover:text-blue-800 text-sm font-medium mb-8 inline-block">&larr; Back to @Model.Card.Category</a>
+        <a href="/@Model.Card.Category" class="text-blue-600 hover:text-blue-800 text-sm font-medium mb-8 inline-block">&larr; Back to @(catInfo?.DisplayName ?? Model.Card.Category)</a>
 
         <!-- Header -->
         <div class="mb-8">
@@ -35,8 +30,18 @@
             <p class="text-gray-500 text-xl">@Model.Card.Description</p>
         </div>
 
-        <!-- Image -->
-        @if (!string.IsNullOrEmpty(Model.Card.Image) && Model.Card.Image != "/images/placeholder.jpg")
+        <!-- Image / Video -->
+        @if (!string.IsNullOrEmpty(Model.Card.YoutubeId))
+        {
+            <div class="relative mb-8" style="padding-bottom: 56.25%;">
+                <iframe class="absolute top-0 left-0 w-full h-full rounded-xl"
+                        src="https://www.youtube.com/embed/@Model.Card.YoutubeId"
+                        title="@Model.Card.Title"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </div>
+        }
+        else if (!string.IsNullOrEmpty(Model.Card.Image) && Model.Card.Image != "/images/placeholder.jpg")
         {
             <img src="@Model.Card.Image" alt="@Model.Card.Title" class="w-full h-96 object-cover rounded-xl mb-8" />
         }

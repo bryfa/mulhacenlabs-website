@@ -9,19 +9,9 @@ namespace MulhacenLabs.Website.Pages
     {
         private readonly ContentService _contentService;
 
-        private static readonly Dictionary<string, (string DisplayName, string Description)> CategoryMeta = new()
-        {
-            { "plugins", ("Plugins", "Professional audio plugins for music production") },
-            { "releases", ("Releases", "Music releases like albums, singles, and EPs") },
-            { "sample-packs", ("Sample Packs", "High quality samples for your productions") },
-            { "events", ("Events", "Live shows and appearances") },
-            { "blogs", ("Blog", "Tutorials, insights and updates from the lab") }
-        };
-
         public PagedResult<CardItem> Result { get; set; } = new();
         public string CategorySlug { get; set; } = string.Empty;
-        public string DisplayName { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+        public CategoryInfo Category { get; set; } = null!;
 
         public CategoryModel(ContentService contentService)
         {
@@ -30,16 +20,11 @@ namespace MulhacenLabs.Website.Pages
 
         public IActionResult OnGet(string category, [FromQuery] int page = 1)
         {
-            if (!ContentService.ValidCategories.Contains(category))
+            if (!CategoryRegistry.BySlug.TryGetValue(category, out var info))
                 return NotFound();
 
             CategorySlug = category;
-
-            if (CategoryMeta.TryGetValue(category, out var meta))
-            {
-                DisplayName = meta.DisplayName;
-                Description = meta.Description;
-            }
+            Category = info;
 
             Result = _contentService.GetCardsPaged(category, page, 9);
 

@@ -116,4 +116,84 @@ public class ContentServiceTests : IDisposable
         Assert.Empty(card.Tags);
         Assert.Equal(string.Empty, card.Image);
     }
+
+    [Fact]
+    public void GetCards_ParsesYoutubeId()
+    {
+        WriteContentFile("videos", "demo-video.md",
+            "---\ntitle: Demo Video\ndescription: A demo\nyoutubeId: abc123XYZ\ndate: 2026-01-10\n---\nWatch above.\n");
+
+        var cards = _service.GetCards("videos");
+
+        var card = Assert.Single(cards);
+        Assert.Equal("abc123XYZ", card.YoutubeId);
+    }
+
+    [Fact]
+    public void GetCards_YoutubeIdIsNullWhenNotInFrontmatter()
+    {
+        WriteContentFile("plugins", "no-video.md",
+            "---\ntitle: A Plugin\ndescription: No video here\ndate: 2026-01-01\n---\nContent.\n");
+
+        var cards = _service.GetCards("plugins");
+
+        var card = Assert.Single(cards);
+        Assert.Null(card.YoutubeId);
+    }
+
+    [Fact]
+    public void GetCards_SkipsFilesWithMalformedYaml()
+    {
+        WriteContentFile("blog", "good.md",
+            "---\ntitle: Good Post\ndescription: Valid\ndate: 2025-01-01\n---\nContent.\n");
+
+        // Invalid YAML (mapping value not allowed here)
+        WriteContentFile("blog", "malformed-yaml.md",
+            "---\ntitle: [unclosed bracket\ndate: 2025-01-01\n---\nContent.\n");
+
+        var cards = _service.GetCards("blog");
+
+        var card = Assert.Single(cards);
+        Assert.Equal("Good Post", card.Title);
+    }
+
+    [Fact]
+    public void GetCardsPaged_ReturnsCorrectPage()
+    {
+        for (var i = 1; i <= 5; i++)
+            WriteContentFile("blog", $"post-{i:D2}.md",
+                $"---\ntitle: Post {i}\ndescription: Desc\ndate: 2025-01-{i:D2}\n---\n");
+
+        var result = _service.GetCardsPaged("blog", page: 1, pageSize: 3);
+
+        Assert.Equal(3, result.Items.Count);
+        Assert.Equal(1, result.CurrentPage);
+        Assert.Equal(2, result.TotalPages);
+        Assert.Equal(5, result.TotalItems);
+        Assert.False(result.HasPreviousPage);
+        Assert.True(result.HasNextPage);
+    }
+
+    [Fact]
+    public void GetCardsPaged_ClampsOutOfRangePageNumber()
+    {
+        WriteContentFile("blog", "post.md",
+            "---\ntitle: Only Post\ndescription: Desc\ndate: 2025-01-01\n---\n");
+
+        var resultLow = _service.GetCardsPaged("blog", page: -5, pageSize: 9);
+        var resultHigh = _service.GetCardsPaged("blog", page: 99, pageSize: 9);
+
+        Assert.Equal(1, resultLow.CurrentPage);
+        Assert.Equal(1, resultHigh.CurrentPage);
+    }
+
+    [Fact]
+    public void GetCardsPaged_ReturnsEmptyPageForMissingCategory()
+    {
+        var result = _service.GetCardsPaged("nonexistent", page: 1, pageSize: 9);
+
+        Assert.Empty(result.Items);
+        Assert.Equal(1, result.TotalPages);
+        Assert.Equal(0, result.TotalItems);
+    }
 }
