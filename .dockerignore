@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/publish/
+**/.git/
+node_modules/
+.vs/
+.idea/
+tests/
+*.env
+appsettings.*.json
